@@ -1,10 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config();
-const db = require('./db');
-
 const app = express();
+const db = require('./db'); //conexion con MYSQL
 const PORT = process.env.PORT || 3000;
+
 
 // Middleware para datos del formulario
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,26 +18,33 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/../frontend/index.html');
 });
 
-// Ruta de login
+// -----------------------------------------Ruta de login---------------------------------------------------------
 app.post('/login', (req, res) => {
-  const { email, password } = req.body;
+  const email = req.body.email;
+  const password = req.body.password;
+
+  if (!email || !password) {
+    return res.status(400).send('❌ Faltan datos');
+  }
 
   const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
   db.query(query, [email, password], (err, results) => {
     if (err) {
-      console.error('Error al buscar usuario:', err);
-      return res.status(500).send('Error interno del servidor');
+      console.error('Error en la consulta:', err);
+      return res.status(500).send('❌ Error del servidor');
     }
 
-    if (!results.length > 0) {
-      res.send('✅ ¡Login exitoso!');
+    if (results.length > 0) {
+      // Usuario encontrado
+      res.send('✅ Inicio de sesión exitoso');
     } else {
       res.send('❌ Credenciales incorrectas');
     }
   });
 });
 
-// register
+
+// ---------------------------------register-----------------------------------------------------------
 app.post('/register', (req, res) => {
   const email = req.body.email.trim();
   const password = req.body.password.trim();
@@ -52,7 +59,7 @@ app.post('/register', (req, res) => {
   });
 });
 
-//Forgot-password
+//---------------------------------------------Forgot-password-----------------------------------------------------------
 app.post('/forgot-password', (req, res) => {
   const email = req.body.email.trim();
 
@@ -73,7 +80,7 @@ app.post('/forgot-password', (req, res) => {
 });
 
 
-// Iniciar el servidor
+// ------------------------------------------Iniciar el servidor-------------------------------------------------------------
 app.listen(PORT, () => {
   console.log(`🟢 Servidor escuchando en http://localhost:${PORT}`);
 });

@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="container">
-        <div class="title">Login</div>
-        <div class="group">
-            <form method="post" action="/login">
-            <input type="email" type="email" placeholder="correo" required><small>Debe ingresar un correo*</small><br>
-            <input type="password" type="password" placeholder="contraseña" required><br>
-            <button type="submit">Iniciar Session</button>
-        </form>
-            <p>¿No tienes cuenta? <a href="register.html">Regístrate aquí</a></p>
-            <p><a href="forgot.html">¿Olvidaste tu contraseña?</a></p>
-
-        </div>
-    </div>
+  <div class="container">
+    <img src="logo.png" alt="Logo de la app" class="logo-img">
+    <div class="title">Login</div>
+    <form method="POST" action="/login">
+      <input type="email" name="email" placeholder="correo" required />
+      <input type="password" name="password" placeholder="contraseña" required />
+      <button type="submit">Iniciar sesión</button>
+    </form>
+    <p>¿No tienes cuenta? <a href="register.html">Regístrate aquí</a></p>
+    <p><a href="forgot.html">¿Olvidaste tu contraseña?</a></p>
+  </div>
 </body>
 </html>
