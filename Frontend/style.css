@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-/* Fuente manuscrita (puedes cambiarla por otra si quieres) */
+/* Fuente manuscrita */
 @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
 
 body {
@@ -14,7 +14,7 @@ body {
   justify-content: center;
   align-items: center;
   background: radial-gradient(circle at bottom center, #6c5ce7 0%, #2d2a72 40%, #0f0f1c 100%);
-  font-family: 'Arial', sans-serif; /* Cambia aquí la fuente si quieres */
+  font-family: 'Arial', sans-serif; 
   color: rgb(0, 0, 0);
 }
 

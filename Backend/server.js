@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 require('dotenv').config();
 const app = express();
 const db = require('./db'); //conexion con MYSQL
@@ -7,11 +6,12 @@ const PORT = process.env.PORT || 3000;
 
 
 // Middleware para datos del formulario
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Servir archivos estáticos del frontend
 app.use(express.static('frontend'));
+
 
 // Ruta de inicio
 app.get('/', (req, res) => {
@@ -36,7 +36,7 @@ app.post('/login', (req, res) => {
 
     if (results.length > 0) {
       // Usuario encontrado
-      res.send('✅ Inicio de sesión exitoso');
+      return res.redirect('/registro.html');
     } else {
       res.send('❌ Credenciales incorrectas');
     }
@@ -78,6 +78,22 @@ app.post('/forgot-password', (req, res) => {
     }
   });
 });
+
+// ------------------------------------- Ruta que recibe el formulario --------------------------------------
+app.post('/registrar-persona', (req, res) => {
+  const { nombre, cedula, direccion, telefono, correo } = req.body;
+
+  const query = 'INSERT INTO personas (nombre, cedula, direccion, telefono, correo) VALUES (?, ?, ?, ?, ?)';
+  db.query(query, [nombre, cedula, direccion, telefono, correo], (err, result) => {
+    if (err) {
+      console.error('Error al registrar persona:', err);
+      return res.status(500).send('Error al registrar persona');
+    }
+
+    res.send('Persona registrada correctamente.');
+  });
+});
+
 
 
 // ------------------------------------------Iniciar el servidor-------------------------------------------------------------
