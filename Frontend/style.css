@@ -4,9 +4,6 @@
   box-sizing: border-box;
 }
 
-/* Fuente manuscrita */
-@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
-
 body {
   height: 100vh;
   margin: 0;
@@ -14,7 +11,7 @@ body {
   justify-content: center;
   align-items: center;
   background: radial-gradient(circle at bottom center, #6c5ce7 0%, #2d2a72 40%, #0f0f1c 100%);
-  font-family: 'Arial', sans-serif; 
+  font-family: 'Poppins', sans-serif;
   color: rgb(0, 0, 0);
 }
 

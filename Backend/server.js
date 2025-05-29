@@ -81,10 +81,10 @@ app.post('/forgot-password', (req, res) => {
 
 // ------------------------------------- Ruta que recibe el formulario --------------------------------------
 app.post('/registrar-persona', (req, res) => {
-  const { nombre, cedula, direccion, telefono, correo } = req.body;
+  const { nombre, cedula, direccion, telefono, correo} = req.body;
 
-  const query = 'INSERT INTO personas (nombre, cedula, direccion, telefono, correo) VALUES (?, ?, ?, ?, ?)';
-  db.query(query, [nombre, cedula, direccion, telefono, correo], (err, result) => {
+  const query = 'INSERT INTO personas (nombre, cedula, direccion, telefono, correo, sexo) VALUES (?, ?, ?, ?, ?, ?)';
+  db.query(query, [nombre, cedula, direccion, telefono, correo, ], (err, result) => {
     if (err) {
       console.error('Error al registrar persona:', err);
       return res.status(500).send('Error al registrar persona');
