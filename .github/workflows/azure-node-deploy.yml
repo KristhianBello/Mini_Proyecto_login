@@ -12,27 +12,29 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '18'
 
       - name: Install dependencies
-        working-directory: backend
+        working-directory: ./backend
         run: npm install
 
       - name: Zip artifact for deployment
         working-directory: backend
-        run: zip -r release.zip ./*
+        run: zip -r ../release.zip ./*
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: backend/release.zip
+          path: release.zi
+
 
   deploy:
     runs-on: ubuntu-latest
@@ -40,10 +42,9 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    
     permissions:
-      id-token: write
-      contents: read
+      id-token: write # Required for requesting the JWT
+      contents: read  # Required for actions/checkout
 
     steps:
       - name: Download artifact from build job
@@ -52,7 +53,7 @@ jobs:
           name: node-app
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip -d .
+        run: unzip release.zip
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -61,10 +62,11 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
-          app-name: formulario-miaplicacion
+          app-name: 'agendamm'
           slot-name: 'Production'
           package: .
