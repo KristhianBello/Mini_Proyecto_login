@@ -10,12 +10,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Servir archivos estáticos del frontend
-app.use(express.static('frontend'));
+app.use(express.static('public'));
 
 
 // Ruta de inicio
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/../frontend/index.html');
+    //res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(__dirname + '/public/index.html');
+
 });
 
 // -----------------------------------------Ruta de login---------------------------------------------------------
