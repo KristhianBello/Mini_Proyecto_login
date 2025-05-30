@@ -28,8 +28,7 @@ jobs:
         
       - name: Zip backend (con frontend adentro)
         run: |
-          cd backend
-          zip -r ../app.zip .
+          cd backend && npm install
 
       - name: Debug - Lista el contenido del zip
         run: |
