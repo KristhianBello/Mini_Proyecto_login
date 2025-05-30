@@ -20,11 +20,12 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: Backend
 
-
-      # Si no tienes un script build en package.json, puedes omitir esta parte
-      #- name: Build
-      #  run: npm run build
+      # No build step needed for pure JS
+      # - name: Build
+      #   run: npm run build
+      #   working-directory: Backend
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
@@ -32,4 +33,4 @@ jobs:
           app-name: formulario
           slot-name: Production
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
-          package: .
+          package: ./Backend
