@@ -25,10 +25,15 @@ jobs:
         working-directory: ./backend
         run: npm install
 
-      - name: Zip backend (con frontend adentro)
+      - name: Zip backend sin subcarpeta
         run: |
           cd backend
-          zip -r ../app.zip . -x 'node_modules/*'
+          zip -r ../app.zip * .[^.]* -x 'node_modules/*'
+
+      - name: Debug - Lista el contenido del zip
+        run: unzip -l app.zip
+
+
 
       - name: Debug - Lista el contenido del zip
         run: unzip -l app.zip
