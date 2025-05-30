@@ -31,8 +31,15 @@ jobs:
         working-directory: backend
         run: zip -r ../release.zip ./*
 
+<<<<<<< HEAD
       - name: Debug - List zip contents
         run: unzip -l release.zip
+=======
+      - name: Zip backend (con frontend adentro)
+        run: |
+          cd backend
+          zip -r ../app.zip .
+>>>>>>> parent of 0223f47 (funca)
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
