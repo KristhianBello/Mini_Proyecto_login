@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start":" node server.js"
+    "start": "node server.js",
+    "build": "echo \"No hay build necesario para JS puro\"",
+    "test": "echo \"Sin pruebas definidas\""
   },
   "keywords": [],
   "author": "",
