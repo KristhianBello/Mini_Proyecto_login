@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const app = express();
 const db = require('./db'); //conexion con MYSQL
+const path = require('path');
 const PORT = process.env.PORT || 3000;
 
 
@@ -10,15 +11,27 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Servir archivos estáticos del frontend
-app.use(express.static('public'));
+
+app.get('/ping', (req, res) => {
+  res.send('🏓 ¡Servidor activo en Azure!');
+});
+
+const publicPath = path.join(__dirname, 'public');
+app.use(express.static(publicPath));
 
 
 // Ruta de inicio
 app.get('/', (req, res) => {
     //res.sendFile(__dirname + '/public/index.html');
-    console.log("📥 Se recibió solicitud a /");
 
-    res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(path.join(publicPath, 'index.html'), (err) => {
+        if (err) {
+            console.error('Error al enviar el archivo:', err);
+            res.status(err.status).end();
+        } else {
+            console.log('Archivo enviado correctamente');
+        }
+    });
 
 });
 
