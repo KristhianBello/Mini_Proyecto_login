@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+
 // Servir archivos estáticos del frontend
 
 app.get('/ping', (req, res) => {
