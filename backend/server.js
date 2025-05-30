@@ -16,6 +16,8 @@ app.use(express.static('public'));
 // Ruta de inicio
 app.get('/', (req, res) => {
     //res.sendFile(__dirname + '/public/index.html');
+    console.log("📥 Se recibió solicitud a /");
+
     res.sendFile(__dirname + '/public/index.html');
 
 });
