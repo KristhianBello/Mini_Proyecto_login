@@ -22,19 +22,16 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: 
-          cd backend
-          npm install
-        
+        working-directory: ./backend
+        run: npm install
+
       - name: Zip backend (con frontend adentro)
         run: |
+          cd backend
           zip -r ../app.zip .
 
-
       - name: Debug - Lista el contenido del zip
-        run: |
-          unzip -l app.zip
-
+        run: unzip -l app.zip
 
       - name: Azure Login
         uses: Azure/login@v2
@@ -48,9 +45,7 @@ jobs:
         with:
           app-name: formulario-miaplicacion
           slot-name: Production
-          package: ./app.zip
-
-        
+          package: app.zip
 
 
 
