@@ -12,6 +12,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read # Required for actions/checkout
+
 
     steps:
       - uses: actions/checkout@v4
@@ -19,10 +22,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
 
       - name: Install dependencies
-        working-directory: ./backend
+        working-directory: backend
         run: npm install
 
       - name: Zip artifact for deployment
