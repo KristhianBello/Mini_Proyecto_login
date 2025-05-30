@@ -23,7 +23,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: Backend
 
       - name: Azure Login
         uses: Azure/login@v2
