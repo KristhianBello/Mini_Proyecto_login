@@ -34,7 +34,7 @@ jobs:
         run: zip release.zip ./* -r
 
       - name: Debug - Lista el contenido del zip
-        run: unzip -l app.zip
+        run: unzip -l release.zip
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -74,5 +74,5 @@ jobs:
         with:
           app-name: 'FormularioInstance'
           slot-name: 'Production'
-          package: app.zip
+          package: release.zip
           
