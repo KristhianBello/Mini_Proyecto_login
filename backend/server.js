@@ -3,7 +3,7 @@ require('dotenv').config();
 const app = express();
 const db = require('./db'); //conexion con MYSQL
 const path = require('path');
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 
 // Middleware para datos del formulario
