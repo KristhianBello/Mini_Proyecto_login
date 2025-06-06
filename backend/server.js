@@ -1,22 +1,17 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 require('dotenv').config();
-const app = express();
-const db = require('./db'); //conexion con MYSQL
+const db = require('./db');
 const path = require('path');
+
+const app = express();
 const PORT = process.env.PORT || 8080;
 
-
 // Middleware para datos del formulario
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Servir archivos estáticos del frontend
-
-app.get('/ping', (req, res) => {
-  res.send('🏓 ¡Servidor activo en Azure!');
-});
-
 const publicPath = path.join(__dirname, 'public');
 app.use(express.static(publicPath));
 
@@ -36,33 +31,27 @@ app.get('/', (req, res) => {
 
 });
 
-// -----------------------------------------Ruta de login---------------------------------------------------------
-app.post('/login', (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
 
-  if (!email || !password) {
-    return res.status(400).send('❌ Faltan datos');
-  }
+// Ruta de login
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
 
   const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
   db.query(query, [email, password], (err, results) => {
     if (err) {
-      console.error('Error en la consulta:', err);
-      return res.status(500).send('❌ Error del servidor');
+      console.error('Error al buscar usuario:', err);
+      return res.status(500).send('Error interno del servidor');
     }
 
-    if (results.length > 0) {
-      // Usuario encontrado
-      return res.redirect('/registro.html');
+    if (!results.length > 0) {
+      res.send('✅ ¡Login exitoso!');
     } else {
       res.send('❌ Credenciales incorrectas');
     }
   });
 });
 
-
-// ---------------------------------register-----------------------------------------------------------
+// register
 app.post('/register', (req, res) => {
   const email = req.body.email.trim();
   const password = req.body.password.trim();
@@ -77,7 +66,7 @@ app.post('/register', (req, res) => {
   });
 });
 
-//---------------------------------------------Forgot-password-----------------------------------------------------------
+//Forgot-password
 app.post('/forgot-password', (req, res) => {
   const email = req.body.email.trim();
 
@@ -97,24 +86,8 @@ app.post('/forgot-password', (req, res) => {
   });
 });
 
-// ------------------------------------- Ruta que recibe el formulario --------------------------------------
-app.post('/registrar-persona', (req, res) => {
-  const { nombre, cedula, direccion, telefono, correo} = req.body;
 
-  const query = 'INSERT INTO personas (nombre, cedula, direccion, telefono, correo) VALUES (?, ?, ?, ?, ?)';
-  db.query(query, [nombre, cedula, direccion, telefono, correo,], (err, result) => {
-    if (err) {
-      console.error('Error al registrar persona:', err);
-      return res.status(500).send('Error al registrar persona');
-    }
-
-    res.send('Persona registrada correctamente.');
-  });
-});
-
-
-
-// ------------------------------------------Iniciar el servidor-------------------------------------------------------------
+// Iniciar el servidor
 app.listen(PORT, () => {
   console.log(`🟢 Servidor escuchando en http://localhost:${PORT}`);
 });
